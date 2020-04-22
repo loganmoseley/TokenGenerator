@@ -1,7 +1,7 @@
 import XCTest
 
-import CrosswordTokenGeneratorTests
+import TokenGeneratorTests
 
 var tests = [XCTestCaseEntry]()
-tests += CrosswordTokenGeneratorTests.allTests()
+tests += TokenGeneratorTests.allTests()
 XCTMain(tests)

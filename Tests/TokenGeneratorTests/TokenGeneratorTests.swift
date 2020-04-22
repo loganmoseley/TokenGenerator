@@ -1,7 +1,7 @@
 import XCTest
 import class Foundation.Bundle
 
-final class CrosswordTokenGeneratorTests: XCTestCase {
+final class TokenGeneratorTests: XCTestCase {
     func testExample() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
@@ -12,7 +12,7 @@ final class CrosswordTokenGeneratorTests: XCTestCase {
             return
         }
 
-        let fooBinary = productsDirectory.appendingPathComponent("CrosswordTokenGenerator")
+        let fooBinary = productsDirectory.appendingPathComponent("TokenGenerator")
 
         let process = Process()
         process.executableURL = fooBinary

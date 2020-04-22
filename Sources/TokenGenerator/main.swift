@@ -2,7 +2,7 @@ import ArgumentParser
 import CodableCSV
 import Foundation
 
-struct CrosswordTokenGenerator: ParsableCommand {
+struct TokenGenerator: ParsableCommand {
 
     @Argument(help: "The target platform. \(Target.allCaseNames)")
     var target: Target
@@ -44,4 +44,4 @@ extension CaseIterable {
     }
 }
 
-CrosswordTokenGenerator.main()
+TokenGenerator.main()
