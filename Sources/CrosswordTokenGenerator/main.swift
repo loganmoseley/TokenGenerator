@@ -1,4 +1,5 @@
 import ArgumentParser
+import CodableCSV
 import Foundation
 
 struct CrosswordTokenGenerator: ParsableCommand {
@@ -11,9 +12,26 @@ struct CrosswordTokenGenerator: ParsableCommand {
 
     func run() throws {
         let url = URL(fileURLWithPath: path)
-        let csv = try String(contentsOf: url)
-        print(csv)
+        let csvColors = try decodeCSV([CodableColor].self, from: url)
+        print(csvColors.count)
     }
+}
+
+/// Decoding twice is wasteful, but I'll deal with that once it starts to costing real time.
+func decodeCSV<T: Decodable & Collection>(_ type: T.Type, from url: URL) throws -> T {
+    let crlfDecoder = CSVDecoder {
+        $0.delimiters.row = "\r\n"
+        $0.headerStrategy = .firstLine
+    }
+    let lfDecoder = CSVDecoder {
+        $0.delimiters.row = "\n"
+        $0.headerStrategy = .firstLine
+    }
+    let crlfValues = try crlfDecoder.decode(T.self, from: url)
+    let lfValues = try lfDecoder.decode(T.self, from: url)
+    return crlfValues.count > lfValues.count
+        ? crlfValues
+        : lfValues
 }
 
 enum Target: String, CaseIterable, ExpressibleByArgument {
