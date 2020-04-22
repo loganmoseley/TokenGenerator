@@ -13,7 +13,11 @@ struct TokenGenerator: ParsableCommand {
     func run() throws {
         let url = URL(fileURLWithPath: path)
         let csvColors = try decodeCSV([CodableColor].self, from: url)
-        print(csvColors.count)
+        let colors = csvColors.map(Color.init)
+        switch target {
+        case .android:  print(androidXML(colors))
+        case .ios:      print(iosSwift(colors))
+        }
     }
 }
 
