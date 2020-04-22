@@ -3,21 +3,27 @@ import Foundation
 
 struct CrosswordTokenGenerator: ParsableCommand {
 
-    @Argument(help: "The target platform.")
+    @Argument(help: "The target platform. \(Target.allCaseNames)")
     var target: Target
 
     @Argument(help: "The path to a spreadsheet CSV export.")
-    var csvPath: String
+    var path: String
 
     func run() throws {
-        let url = URL(fileURLWithPath: csvPath)
+        let url = URL(fileURLWithPath: path)
         let csv = try String(contentsOf: url)
         print(csv)
     }
 }
 
-enum Target: String, ExpressibleByArgument {
+enum Target: String, CaseIterable, ExpressibleByArgument {
     case android, ios
+}
+
+extension CaseIterable {
+    static var allCaseNames: [String] {
+        allCases.map { "\($0)" }
+    }
 }
 
 CrosswordTokenGenerator.main()
