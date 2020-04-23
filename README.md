@@ -14,7 +14,7 @@ Download the latest program from [Releases](https://github.com/loganmoseley/Toke
 
 The `TokenGenerator` program has exactly two parameters: `target` and `path`.
 
-- Use `target` to specify the output platform, Android or iOS. *Note: Adding a web target would be easy!*
+- Use `target` to specify the output platform: Android, iOS, or web. *Note: Adding or changing targets is easy!*
 - Use `path` to specify the CSV input file.
 
 ```sh
@@ -26,6 +26,7 @@ The program writes to stdout, so to write a file use the write pipe `>`. It goes
 ```sh
 $ ./TokenGenerator android Colors.csv > Colors.xml
 $ ./TokenGenerator ios Colors.csv > Colors.swift
+$ ./TokenGenerator web Colors.csv > Colors.scss
 ```
 
 Also try out `$./TokenGenerator --help`
