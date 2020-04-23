@@ -17,6 +17,7 @@ struct TokenGenerator: ParsableCommand {
         switch target {
         case .android:  print(androidXML(colors))
         case .ios:      print(iosSwift(colors))
+        case .web:      print(webSCSS(colors))
         }
     }
 }
@@ -39,7 +40,7 @@ func decodeCSV<T: Decodable & Collection>(_ type: T.Type, from url: URL) throws 
 }
 
 enum Target: String, CaseIterable, ExpressibleByArgument {
-    case android, ios
+    case android, ios, web
 }
 
 extension CaseIterable {
