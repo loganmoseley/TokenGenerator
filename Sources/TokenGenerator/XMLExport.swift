@@ -1,6 +1,6 @@
 import Foundation
 
-func androidXML(_ colors: [Color]) -> String {
+func androidXML(_ colors: [SemanticColor]) -> String {
     """
     <?xml version="1.0" encoding="utf-8"?>
     <resources>
@@ -13,7 +13,7 @@ func androidXML(_ colors: [Color]) -> String {
     """
 }
 
-private func xmlOneColor(_ color: Color) -> String {
+private func xmlOneColor(_ color: SemanticColor) -> String {
     """
         <color name="\(color.name)">@android:color/\(color.lightNormal)</color>
         <color name="\(color.name)HC">@android:color/\(color.lightHighContrast)</color>

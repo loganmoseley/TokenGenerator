@@ -14,15 +14,23 @@ struct TokenGenerator: ParsableCommand {
     @OptionGroup() var sheets: SheetOptions
 
     func run() throws {
+
         if let path = sheets.semantic {
             let data = try Data(contentsOfPathOrURL: path)
-            let csvColors = try decodeCSV([CodableColor].self, from: data)
-            let colors = csvColors.map(Color.init)
+            let csvColors = try decodeCSV([SemanticCodableColor].self, from: data)
+            let colors = csvColors.map(SemanticColor.init)
             switch target {
             case .android:  print(androidXML(colors))
             case .ios:      print(iosSwift(colors))
             case .web:      print(webSCSS(colors))
             }
+        }
+
+        if let path = sheets.swatch {
+            let data = try Data(contentsOfPathOrURL: path)
+            let csvColors = try decodeCSV([SwatchCodableColor].self, from: data)
+            let colors = csvColors.map(SwatchColor.init)
+            print(colors)
         }
     }
 }
@@ -54,7 +62,7 @@ func decodeCSV<T: Decodable & Collection>(_ type: T.Type, from data: Data) throw
     }
     let crlfValues = try crlfDecoder.decode(T.self, from: data)
     let lfValues = try lfDecoder.decode(T.self, from: data)
-    return crlfValues.count > lfValues.count
+    return crlfValues.count >= lfValues.count
         ? crlfValues
         : lfValues
 }

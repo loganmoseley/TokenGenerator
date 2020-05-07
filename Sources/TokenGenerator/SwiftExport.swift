@@ -1,6 +1,6 @@
 import Foundation
 
-func iosSwift(_ colors: [Color]) -> String {
+func iosSwift(_ colors: [SemanticColor]) -> String {
     """
     import Foundation
 
@@ -13,7 +13,7 @@ func iosSwift(_ colors: [Color]) -> String {
     """
 }
 
-private func swiftOneColor(_ color: Color) -> String {
+private func swiftOneColor(_ color: SemanticColor) -> String {
     let comment: String? = color.moreDescription.map {
         """
             // \($0)\n
