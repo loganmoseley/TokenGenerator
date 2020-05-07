@@ -4,26 +4,46 @@ import Foundation
 
 struct TokenGenerator: ParsableCommand {
 
+    static var configuration = CommandConfiguration(
+        commandName: "TokenGenerator",
+        abstract: "A small program to turn design tokens into code.")
+
     @Argument(help: "The target platform. \(Target.allCaseNames)")
     var target: Target
 
-    @Argument(help: "The path to a spreadsheet CSV export.")
-    var path: String
+    @OptionGroup() var sheets: SheetOptions
 
     func run() throws {
-        let url = URL(fileURLWithPath: path)
-        let csvColors = try decodeCSV([CodableColor].self, from: url)
-        let colors = csvColors.map(Color.init)
-        switch target {
-        case .android:  print(androidXML(colors))
-        case .ios:      print(iosSwift(colors))
-        case .web:      print(webSCSS(colors))
+        if let path = sheets.semantic {
+            let data = try Data(contentsOfPathOrURL: path)
+            let csvColors = try decodeCSV([CodableColor].self, from: data)
+            let colors = csvColors.map(Color.init)
+            switch target {
+            case .android:  print(androidXML(colors))
+            case .ios:      print(iosSwift(colors))
+            case .web:      print(webSCSS(colors))
+            }
+        }
+    }
+}
+
+struct SheetOptions: ParsableArguments {
+
+    @Option(help: "Location of the semantic colors. A URL or a local file is fine.")
+    var semantic: String?
+
+    @Option(help: "Location of the swatch colors. A URL or a local file is fine.")
+    var swatch: String?
+
+    func validate() throws {
+        if semantic == nil && swatch == nil {
+            throw ValidationError("Must provide at least one sheet location. Semantic, swatch, or both.")
         }
     }
 }
 
 /// Decoding twice is wasteful, but I'll deal with that once it starts to costing real time.
-func decodeCSV<T: Decodable & Collection>(_ type: T.Type, from url: URL) throws -> T {
+func decodeCSV<T: Decodable & Collection>(_ type: T.Type, from data: Data) throws -> T {
     let crlfDecoder = CSVDecoder {
         $0.delimiters.row = "\r\n"
         $0.headerStrategy = .firstLine
@@ -32,8 +52,8 @@ func decodeCSV<T: Decodable & Collection>(_ type: T.Type, from url: URL) throws 
         $0.delimiters.row = "\n"
         $0.headerStrategy = .firstLine
     }
-    let crlfValues = try crlfDecoder.decode(T.self, from: url)
-    let lfValues = try lfDecoder.decode(T.self, from: url)
+    let crlfValues = try crlfDecoder.decode(T.self, from: data)
+    let lfValues = try lfDecoder.decode(T.self, from: data)
     return crlfValues.count > lfValues.count
         ? crlfValues
         : lfValues
