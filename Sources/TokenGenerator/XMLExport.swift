@@ -6,14 +6,14 @@ func androidXML(_ colors: [SemanticColor]) -> String {
     <resources>
 
     \(colors
-        .map(xmlOneColor)
+        .map(xmlSemanticColor)
         .joined(separator: "\n\n"))
 
     </resources>
     """
 }
 
-private func xmlOneColor(_ color: SemanticColor) -> String {
+private func xmlSemanticColor(_ color: SemanticColor) -> String {
     """
         <color name="\(color.name)">@android:color/\(color.lightNormal)</color>
         <color name="\(color.name)HC">@android:color/\(color.lightHighContrast)</color>

@@ -7,13 +7,13 @@ func iosSwift(_ colors: [SemanticColor]) -> String {
     extension XWDColor {
 
     \(colors
-        .map(swiftOneColor)
+        .map(swiftSemanticColor)
         .joined(separator: "\n\n"))
     }
     """
 }
 
-private func swiftOneColor(_ color: SemanticColor) -> String {
+private func swiftSemanticColor(_ color: SemanticColor) -> String {
     let comment: String? = color.moreDescription.map {
         """
             // \($0)\n
