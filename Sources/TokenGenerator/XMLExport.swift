@@ -5,9 +5,9 @@ func androidXML(_ semanticColors: [SemanticColor]?, _ swatchColors: [SwatchColor
     <?xml version="1.0" encoding="utf-8"?>
     <resources>
 
-    \(semanticColors.map(xmlColors) ?? "")
-
     \(swatchColors.map(xmlColors) ?? "")
+
+    \(semanticColors.map(xmlColors) ?? "")
 
     </resources>
     """

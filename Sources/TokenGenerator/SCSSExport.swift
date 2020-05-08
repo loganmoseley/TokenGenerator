@@ -2,9 +2,9 @@ import Foundation
 
 func webSCSS(_ semanticColors: [SemanticColor]?, _ swatchColors: [SwatchColor]?) -> String {
     """
-    \(semanticColors.map(scssColors) ?? "")
-
     \(swatchColors.map(scssColors) ?? "")
+
+    \(semanticColors.map(scssColors) ?? "")
     """
 }
 

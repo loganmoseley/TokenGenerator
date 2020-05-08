@@ -3,10 +3,10 @@ import Foundation
 func iosSwift(_ semanticColors: [SemanticColor]?, _ swatchColors: [SwatchColor]?) -> String {
     """
     import Foundation
+    
+    \(swatchColors.map(swiftColors) ?? "")
 
     \(semanticColors.map(swiftColors) ?? "")
-
-    \(swatchColors.map(swiftColors) ?? "")
     """
 }
 
