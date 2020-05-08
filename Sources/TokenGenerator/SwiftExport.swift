@@ -1,6 +1,16 @@
 import Foundation
 
-func iosSwift(_ colors: [SemanticColor]) -> String {
+func iosSwift(_ semanticColors: [SemanticColor]?, _ swatchColors: [SwatchColor]?) -> String {
+    """
+    import Foundation
+
+    \(semanticColors.map(swiftColors) ?? "")
+
+    \(swatchColors.map(swiftColors) ?? "")
+    """
+}
+
+private func swiftColors(_ colors: [SemanticColor]) -> String {
     """
     /// Semantic Colors
     /// -------------
@@ -12,13 +22,13 @@ func iosSwift(_ colors: [SemanticColor]) -> String {
 
     extension XWDColor {
 
-    \(colors.map(swiftSemanticColor).joined(separator: "\n\n"))
+    \(colors.map(swiftColor).joined(separator: "\n\n"))
     
     }
     """
 }
 
-private func swiftSemanticColor(_ color: SemanticColor) -> String {
+private func swiftColor(_ color: SemanticColor) -> String {
     let comment: String? = color.moreDescription.map {
         """
             // \($0)\n
@@ -37,7 +47,7 @@ private func swiftSemanticColor(_ color: SemanticColor) -> String {
         """
 }
 
-func iosSwift(_ colors: [SwatchColor]) -> String {
+private func swiftColors(_ colors: [SwatchColor]) -> String {
     """
     /// Swatch Colors
     /// -------------
@@ -66,13 +76,13 @@ func iosSwift(_ colors: [SwatchColor]) -> String {
 
     extension XWDColor {
 
-    \(colors.map(swiftSwatchColor).joined(separator: "\n\n"))
+    \(colors.map(swiftColor).joined(separator: "\n\n"))
 
     }
     """
 }
 
-private func swiftSwatchColor(_ color: SwatchColor) -> String {
+private func swiftColor(_ color: SwatchColor) -> String {
     // replace non-alphanumerics with "_"
     let alphanumericName = color.name
         .map { (c: Character) -> String in

@@ -15,31 +15,24 @@ struct TokenGenerator: ParsableCommand {
 
     func run() throws {
 
-        if let path = sheets.semantic {
+        let semanticColors = try sheets.semantic.map { path -> [SemanticColor] in
             let data = try Data(contentsOfPathOrURL: path)
             let csvColors = try decodeCSV([SemanticCodableColor].self, from: data)
-            let colors = csvColors.map(SemanticColor.init)
-            switch target {
-            case .android:  print(androidXML(colors))
-            case .ios:      print(iosSwift(colors))
-            case .web:      print(webSCSS(colors))
-            }
+            return csvColors.map(SemanticColor.init)
         }
 
-        if sheets.semantic != nil && sheets.swatch != nil {
-            print("")
-        }
-
-        if let path = sheets.swatch {
+        let swatchColors = try sheets.swatch.map { path -> [SwatchColor] in
             let data = try Data(contentsOfPathOrURL: path)
             let csvColors = try decodeCSV([SwatchCodableColor].self, from: data)
-            let colors = csvColors.map(SwatchColor.init)
-            switch target {
-            case .android:  print(androidXML(colors))
-            case .ios:      print(iosSwift(colors))
-            case .web:      print(webSCSS(colors))
-            }
+            return csvColors.map(SwatchColor.init)
         }
+
+        switch target {
+        case .android:  print(androidXML(semanticColors, swatchColors))
+        case .ios:      print(iosSwift(semanticColors, swatchColors))
+        case .web:      print(webSCSS(semanticColors, swatchColors))
+        }
+
     }
 }
 
