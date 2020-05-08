@@ -27,7 +27,7 @@ The program writes to stdout, so to write a file use the write pipe `>`. It goes
 ```sh
 $ ./TokenGenerator ios --semantic 'URL_HERE' > Semantic.swift
 $ ./TokenGenerator android --swatch ~/Downloads/colors.csv > Swatch.xml
-$ ./TokenGenerator web --semantic 'URL_HERE' --swatch 'URL_HERE' > AllColors.scss
+$ ./TokenGenerator web --semantic 'URL_HERE' --swatch 'URL_HERE' > _colors.scss
 ```
 
 Also try out `$./TokenGenerator --help`
@@ -58,4 +58,3 @@ COLUMNS — The origin spreadsheet must have exactly two columns with these exa
 ROWS — The rows must be contiguous.
 
 CELLS — All color cells are required.
-
