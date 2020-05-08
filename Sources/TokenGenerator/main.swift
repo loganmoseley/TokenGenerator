@@ -35,7 +35,7 @@ struct TokenGenerator: ParsableCommand {
             let csvColors = try decodeCSV([SwatchCodableColor].self, from: data)
             let colors = csvColors.map(SwatchColor.init)
             switch target {
-            case .android:  break // print(androidXML(colors))
+            case .android:  print(androidXML(colors))
             case .ios:      print(iosSwift(colors))
             case .web:      print(webSCSS(colors))
             }
