@@ -26,13 +26,17 @@ struct TokenGenerator: ParsableCommand {
             }
         }
 
+        if sheets.semantic != nil && sheets.swatch != nil {
+            print("")
+        }
+
         if let path = sheets.swatch {
             let data = try Data(contentsOfPathOrURL: path)
             let csvColors = try decodeCSV([SwatchCodableColor].self, from: data)
             let colors = csvColors.map(SwatchColor.init)
             switch target {
             case .android:  break // print(androidXML(colors))
-            case .ios:      break // print(iosSwift(colors))
+            case .ios:      print(iosSwift(colors))
             case .web:      print(webSCSS(colors))
             }
         }
