@@ -2,13 +2,18 @@ import Foundation
 
 func iosSwift(_ colors: [SemanticColor]) -> String {
     """
-    import Foundation
+    /// Semantic Colors
+    /// -------------
+    ///
+    /// !!DO NOT MODIFY THIS FILE DIRECTLY!!
+    ///
+    /// The below colors are generated from an automated workflow that is shared
+    /// between web, iOS, and Android platforms.
 
     extension XWDColor {
 
-    \(colors
-        .map(swiftSemanticColor)
-        .joined(separator: "\n\n"))
+    \(colors.map(swiftSemanticColor).joined(separator: "\n\n"))
+    
     }
     """
 }
@@ -21,7 +26,8 @@ private func swiftSemanticColor(_ color: SemanticColor) -> String {
     }
     return (comment ?? "") +
         """
-            @objc(\(color.name)Color) public class var \(color.name): UIColor {
+            @objc(\(color.name)Color)
+            public class var \(color.name): UIColor {
                 switch colorScheme {
                 case .highContrast: return XWDColor.\(color.lightHighContrast)
                 case .normal:       return XWDColor.\(color.lightNormal)
