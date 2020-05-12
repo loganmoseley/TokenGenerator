@@ -76,32 +76,43 @@ private func swiftColors(_ colors: [SwatchColor]) -> String {
 
     extension XWDColor {
 
-    \(colors.map(swiftColor).joined(separator: "\n\n"))
+    \(colors.map { color in
+    """
+        @objc(\(color.safeName)Color)
+        public class var \(color.safeName): UIColor {
+            return UIColor(rgbaValue: 0x\(color.hexColor.dropFirst()))
+        }
+    """
+    }.joined(separator: "\n\n"))
+
+    }
+
+    // MARK: By Name
+
+    private enum ColorName: String {
+    \(colors.map { color in
+    """
+        case \(color.safeName) = "\(color.name)"
+    """
+    }.joined(separator: "\n"))
+    }
+
+    extension XWDColor {
+
+        /// Finds a color based on its *raw* name. For example, if the Swatch sheet has
+        /// "black0.4", which generates `XWDColor.black04`, then you still want
+        /// `XWDColor.color(byName: "black0.4")`
+        @objc public class func color(byName name: String) -> UIColor? {
+            guard let colorName = ColorName(rawValue: name) else { return nil }
+            switch colorName {
+    \(colors.map { color in
+    """
+            case .\(color.safeName): return XWDColor.\(color.safeName)
+    """
+    }.joined(separator: "\n"))
+            }
+        }
 
     }
     """
-}
-
-private func swiftColor(_ color: SwatchColor) -> String {
-    // replace non-alphanumerics with "_"
-    let alphanumericName = color.name
-        .map { (c: Character) -> String in
-            let s = CharacterSet(charactersIn: String(c))
-            return CharacterSet.alphanumerics.isSuperset(of: s)
-                ? String(c)
-                : "_"
-        }
-        .joined()
-
-    let name = (alphanumericName.first?.isLetter ?? false)
-        ? alphanumericName
-        : "_" + alphanumericName
-
-    return
-        """
-            @objc(\(name)Color)
-            public class var \(name): UIColor {
-                return UIColor(rgbaValue: 0x\(color.hexColor.dropFirst()))
-            }
-        """
 }

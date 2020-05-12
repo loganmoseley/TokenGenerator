@@ -9,12 +9,17 @@ struct SemanticColor {
 }
 
 extension SemanticColor {
+
     init(_ cc: SemanticCodableColor) {
         name              = cc.name
         lightHighContrast = cc.lightHighContrast ?? "MISSING"
         lightNormal       = cc.lightNormal ?? "MISSING"
         dark              = cc.dark ?? "MISSING"
         moreDescription   = cc.moreDescription
+    }
+
+    var safeName: String {
+        safeName(raw: name)
     }
 }
 

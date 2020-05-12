@@ -6,9 +6,14 @@ struct SwatchColor {
 }
 
 extension SwatchColor {
+
     init(_ cc: SwatchCodableColor) {
         name     = cc.name
         hexColor = cc.hexColor ?? "MISSING"
+    }
+
+    var safeName: String {
+        safeName(raw: name)
     }
 }
 
