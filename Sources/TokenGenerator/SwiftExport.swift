@@ -28,6 +28,7 @@ private func swiftColors(_ colors: [SemanticColor]) -> String {
     """
 }
 
+/// Since Swatch color names are "safe", references to them must also be "safe".
 private func swiftColor(_ color: SemanticColor) -> String {
     let comment: String? = color.moreDescription.map {
         """
@@ -36,12 +37,12 @@ private func swiftColor(_ color: SemanticColor) -> String {
     }
     return (comment ?? "") +
         """
-            @objc(\(color.name)Color)
-            public class var \(color.name): UIColor {
+            @objc(\(color.safeName)Color)
+            public class var \(color.safeName): UIColor {
                 switch colorScheme {
-                case .highContrast: return XWDColor.\(color.lightHighContrast)
-                case .normal:       return XWDColor.\(color.lightNormal)
-                case .dark:         return XWDColor.\(color.dark)
+                case .highContrast: return XWDColor.\(safeName(raw: color.lightHighContrast))
+                case .normal:       return XWDColor.\(safeName(raw: color.lightNormal))
+                case .dark:         return XWDColor.\(safeName(raw: color.dark))
                 }
             }
         """
