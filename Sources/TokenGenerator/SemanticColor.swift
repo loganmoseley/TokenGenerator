@@ -19,7 +19,7 @@ extension SemanticColor {
     }
 
     var safeName: String {
-        safeName(raw: name)
+        safeWord(raw: name)
     }
 }
 

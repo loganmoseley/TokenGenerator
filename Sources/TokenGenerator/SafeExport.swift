@@ -4,21 +4,24 @@ import Foundation
 /// For example, a Swift variable cannot start with a number.
 ///
 /// If language rules differ, choose a heuristic that best fits all.
-func safeName(raw: String) -> String {
-    // replace non-alphanumerics with "_"
-    let alphanumericName = raw
-        .map { (c: Character) -> String in
-            let s = CharacterSet(charactersIn: String(c))
-            return CharacterSet.alphanumerics.isSuperset(of: s)
-                ? String(c)
-                : "_"
-        }
-        .joined()
+func safeWord(raw: String) -> String {
+    prefixUnderscore(forceAlphanumeric(raw: raw))
+}
 
-    // prefix with underscore if it doesn't start with a letter
-    let name = (alphanumericName.first?.isLetter ?? false)
-        ? alphanumericName
-        : "_" + alphanumericName
+/// Replace non-alphanumerics with underscores.
+func forceAlphanumeric(raw: String) -> String {
+    raw.map { (c: Character) -> String in
+        let s = CharacterSet(charactersIn: String(c))
+        return CharacterSet.alphanumerics.isSuperset(of: s)
+            ? String(c)
+            : "_"
+    }
+    .joined()
+}
 
-    return name
+/// Prefix with underscore if it doesn't start with a letter.
+func prefixUnderscore(_ str: String) -> String {
+    (str.first?.isLetter ?? false)
+        ? str
+        : "_" + str
 }

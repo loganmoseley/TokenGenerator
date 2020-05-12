@@ -40,9 +40,9 @@ private func swiftColor(_ color: SemanticColor) -> String {
             @objc(\(color.safeName)Color)
             public class var \(color.safeName): UIColor {
                 switch colorScheme {
-                case .highContrast: return XWDColor.\(safeName(raw: color.lightHighContrast))
-                case .normal:       return XWDColor.\(safeName(raw: color.lightNormal))
-                case .dark:         return XWDColor.\(safeName(raw: color.dark))
+                case .highContrast: return XWDColor.\(safeWord(raw: color.lightHighContrast))
+                case .normal:       return XWDColor.\(safeWord(raw: color.lightNormal))
+                case .dark:         return XWDColor.\(safeWord(raw: color.dark))
                 }
             }
         """
@@ -58,21 +58,14 @@ private func swiftColors(_ colors: [SwatchColor]) -> String {
     /// The below colors are generated from an automated workflow that is shared
     /// between web, iOS, and Android platforms.
 
-    private extension UIColor {
-        convenience init(rgbaValue: UInt32) {
-            let red   = CGFloat((rgbaValue >> 24) & 0xff) / 255.0
-            let green = CGFloat((rgbaValue >> 16) & 0xff) / 255.0
-            let blue  = CGFloat((rgbaValue >>  8) & 0xff) / 255.0
-            let alpha = CGFloat((rgbaValue      ) & 0xff) / 255.0
-            self.init(red: red, green: green, blue: blue, alpha: alpha)
-        }
+    // MARK: By Name
 
-        class var random: UIColor {
-            let h = CGFloat(arc4random_uniform(256)) / 255.0
-            let s = CGFloat(arc4random_uniform(128)) / 127.0 + 128.0
-            let b = CGFloat(arc4random_uniform(128)) / 127.0 + 128.0
-            return self.init(hue: h, saturation: s, brightness: b, alpha: 1.0)
-        }
+    private enum ColorName: String {
+    \(colors.map { color in
+    """
+        case \(color.safeName) = "\(color.name)"
+    """
+    }.joined(separator: "\n"))
     }
 
     extension XWDColor {
@@ -86,16 +79,6 @@ private func swiftColors(_ colors: [SwatchColor]) -> String {
     """
     }.joined(separator: "\n\n"))
 
-    }
-
-    // MARK: By Name
-
-    private enum ColorName: String {
-    \(colors.map { color in
-    """
-        case \(color.safeName) = "\(color.name)"
-    """
-    }.joined(separator: "\n"))
     }
 
     extension XWDColor {

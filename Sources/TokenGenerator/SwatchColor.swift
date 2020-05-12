@@ -13,7 +13,7 @@ extension SwatchColor {
     }
 
     var safeName: String {
-        safeName(raw: name)
+        safeWord(raw: name)
     }
 }
 
