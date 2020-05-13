@@ -24,7 +24,7 @@ struct TokenGenerator: ParsableCommand {
         let swatchColors = try sheets.swatch.map { path -> [SwatchColor] in
             let data = try Data(contentsOfPathOrURL: path)
             let csvColors = try decodeCSV([SwatchCodableColor].self, from: data)
-            return csvColors.map(SwatchColor.init)
+            return try csvColors.map(SwatchColor.init)
         }
 
         switch target {

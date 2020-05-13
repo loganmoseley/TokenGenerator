@@ -20,7 +20,7 @@ private func swiftColors(_ colors: [SemanticColor]) -> String {
     /// The below colors are generated from an automated workflow that is shared
     /// between web, iOS, and Android platforms.
 
-    extension XWDColor {
+    public extension XWDColor {
 
     \(colors.map(swiftColor).joined(separator: "\n\n"))
     
@@ -38,7 +38,7 @@ private func swiftColor(_ color: SemanticColor) -> String {
     return (comment ?? "") +
         """
             @objc(\(color.safeName)Color)
-            public class var \(color.safeName): UIColor {
+            class var \(color.safeName): UIColor {
                 switch colorScheme {
                 case .highContrast: return XWDColor.\(safeWord(raw: color.lightHighContrast))
                 case .normal:       return XWDColor.\(safeWord(raw: color.lightNormal))
@@ -68,12 +68,12 @@ private func swiftColors(_ colors: [SwatchColor]) -> String {
     }.joined(separator: "\n"))
     }
 
-    extension XWDColor {
+    public extension XWDColor {
 
     \(colors.map { color in
     """
         @objc(\(color.safeName)Color)
-        public class var \(color.safeName): UIColor {
+        class var \(color.safeName): UIColor {
             return UIColor(rgbaValue: 0x\(color.hexColor.dropFirst()))
         }
     """
@@ -81,12 +81,12 @@ private func swiftColors(_ colors: [SwatchColor]) -> String {
 
     }
 
-    extension XWDColor {
+    public extension XWDColor {
 
         /// Finds a color based on its *raw* name. For example, if the Swatch sheet has
         /// "black0.4", which generates `XWDColor.black04`, then you still want
         /// `XWDColor.color(byName: "black0.4")`
-        @objc public class func color(byName name: String) -> UIColor? {
+        @objc class func color(byName name: String) -> UIColor? {
             guard let colorName = ColorName(rawValue: name) else { return nil }
             switch colorName {
     \(colors.map { color in
