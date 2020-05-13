@@ -21,9 +21,9 @@ private func xmlColors(_ colors: [SemanticColor]) -> String {
 
 private func xmlColor(_ color: SemanticColor) -> String {
     """
-        <color name="\(color.name)">@android:color/\(color.lightNormal)</color>
-        <color name="\(color.name)HC">@android:color/\(color.lightHighContrast)</color>
-        <color name="\(color.name)Dark">@android:color/\(color.dark)</color>
+        <color name="\(color.safeName)">@android:color/\(safeWord(raw: color.lightNormal))</color>
+        <color name="\(color.safeName)HC">@android:color/\(safeWord(raw: color.lightHighContrast))</color>
+        <color name="\(color.safeName)Dark">@android:color/\(safeWord(raw: color.dark))</color>
     """
 }
 
@@ -35,6 +35,6 @@ private func xmlColors(_ colors: [SwatchColor]) -> String {
 
 private func xmlColor(_ color: SwatchColor) -> String {
     """
-        <color name="\(color.name)">\(color.hexColor)</color>
+        <color name="\(color.safeName)">\(color.hexColor)</color>
     """
 }
