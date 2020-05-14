@@ -1,10 +1,10 @@
 # TokenGenerator
 
-A small program that turns design tokens into code. There are no templates for input for output, only code.
+A small program that turns design tokens into code. This is no ~~Dana~~ templating system, only code.
 
 ## Motivation
 
-Let’s say you’re establishing a design system. Your goals might include increased consistency for users, efficient collaboration between disciplines, and saving your team time. Generating code from a shared resource helps with all of those: it cuts down on inconsistencies in manually copying, is faster than manually copying, and lets everybody collaborate on one resource.
+Design systems are great. Your goals might include increased consistency for users, efficient collaboration between disciplines, and saving your team time. Generating code from a shared resource helps with all of those: it cuts down on inconsistencies in manually copying, is faster than manually copying, and lets everybody collaborate on one resource.
 
 ## Installation
 
@@ -12,26 +12,29 @@ Download the latest program from [Releases](https://github.com/loganmoseley/Toke
 
 ## Usage
 
-The `TokenGenerator` program has exactly two parameters: `target` and `path`.
+The `TokenGenerator` program has one required and two optional parameters:
 
-- Use `target` to specify the output platform: Android, iOS, or web. *Note: Adding or changing targets is easy!*
-- Use `path` to specify the CSV input file.
+- `target` — Required. Use `target` to specify the output platform: Android, iOS, or web.
+- `--semantic <semantic>` — Optional. Location of the semantic colors. A URL or a local file is fine.
+- `--swatch <swatch>` — Optional. Location of the swatch colors. A URL or a local file is fine.
 
 ```sh
-$./TokenGenerator <target> <path>
+$./TokenGenerator <target> [--semantic <semantic>] [--swatch <swatch>]
 ```
 
 The program writes to stdout, so to write a file use the write pipe `>`. It goes `source > file`. For example,
 
 ```sh
-$ ./TokenGenerator android Colors.csv > Colors.xml
-$ ./TokenGenerator ios Colors.csv > Colors.swift
-$ ./TokenGenerator web Colors.csv > Colors.scss
+$ ./TokenGenerator ios --semantic 'URL_HERE' > Semantic.swift
+$ ./TokenGenerator android --swatch ~/Downloads/colors.csv > Swatch.xml
+$ ./TokenGenerator web --semantic 'URL_HERE' --swatch 'URL_HERE' > _colors.scss
 ```
 
 Also try out `$./TokenGenerator --help`
 
 ## File Format
+
+### Semantic
 
 COLUMNS — The origin spreadsheet must have exactly five columns with these exact names:
 
@@ -45,3 +48,13 @@ ROWS — The rows must be contiguous. You won’t like the output if they’re 
 
 CELLS — All color cells are required. A name’s “More Description” is optional.
 
+## Swatch
+
+COLUMNS — The origin spreadsheet must have exactly two columns with these exact names:
+
+- Name
+- Hex Color
+
+ROWS — The rows must be contiguous.
+
+CELLS — All color cells are required.

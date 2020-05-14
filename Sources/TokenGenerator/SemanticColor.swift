@@ -1,6 +1,6 @@
 import Foundation
 
-struct Color {
+struct SemanticColor {
     let name              : String
     let lightHighContrast : String
     let lightNormal       : String
@@ -8,17 +8,22 @@ struct Color {
     let moreDescription   : String?
 }
 
-extension Color {
-    init(_ cc: CodableColor) {
+extension SemanticColor {
+
+    init(_ cc: SemanticCodableColor) {
         name              = cc.name
         lightHighContrast = cc.lightHighContrast ?? "MISSING"
         lightNormal       = cc.lightNormal ?? "MISSING"
         dark              = cc.dark ?? "MISSING"
         moreDescription   = cc.moreDescription
     }
+
+    var safeName: String {
+        safeWord(raw: name)
+    }
 }
 
-struct CodableColor: Decodable {
+struct SemanticCodableColor: Decodable {
     let name              : String
     let lightHighContrast : String?
     let lightNormal       : String?
