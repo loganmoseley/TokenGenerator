@@ -32,7 +32,7 @@ $ ./TokenGenerator web --semantic 'URL_HERE' --swatch 'URL_HERE' > _colors.scss
 
 Also try out `$./TokenGenerator --help`
 
-## File Format
+## Spreadsheet Format
 
 ### Semantic
 
