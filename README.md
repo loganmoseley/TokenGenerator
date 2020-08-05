@@ -6,6 +6,8 @@ A small program that turns design tokens into code. This is no ~~Dana~~ templati
 
 Design systems are great. Your goals might include increased consistency for users, efficient collaboration between disciplines, and saving your team time. Generating code from a shared resource helps with all of those: it cuts down on inconsistencies in manually copying, is faster than manually copying, and lets everybody collaborate on one resource.
 
+Why not a shrink-wrapped “build system” like [this one from Amazon](https://amzn.github.io/style-dictionary/#/)? Or why not talk directly to the [Figma API](https://www.figma.com/developers/api)? Sometimes you don’t need a code- and process-heavy suite of generalized tools just to generate a little code, especially when you’re still in the scrappy stage!
+
 ## Installation
 
 Download the latest program from [Releases](https://github.com/loganmoseley/TokenGenerator/releases).
