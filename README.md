@@ -60,3 +60,8 @@ COLUMNS — The origin spreadsheet must have exactly two columns with these exa
 ROWS — The rows must be contiguous.
 
 CELLS — All color cells are required.
+
+## Questions, bugs & contributing
+
+If you’ve got a question, found a bug, or are wondering about contributing, please open an [Issue](https://github.com/loganmoseley/TokenGenerator/issues). For contributing, please also read [CONTRIBUTING.md](CONTRIBUTING.md).
+
