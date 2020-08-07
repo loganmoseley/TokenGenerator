@@ -9,7 +9,7 @@ That said, improving documentation, bug triaging, writing tutorials, or even add
 # Getting Started
 Unsure where to begin? You can start by adding an export for your language of choice, or by checking out any [Issues](https://github.com/loganmoseley/TokenGenerator/issues).
 
-For people who have never contributed to open source before, here are a couple of friendly tutorials: http://makeapullrequest.com/ and http://www.firsttimersonly.com/.
+For people who have never contributed to open source before, here are a couple of friendly tutorials: http://makeapullrequest.com/ and http://www.firsttimersonly.com/. Please be mindful of the project’s [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 
 # One More Thing
